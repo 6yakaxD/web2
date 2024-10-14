@@ -2,6 +2,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +10,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AreaCheckServlet extends HttpServlet {
@@ -17,22 +20,18 @@ public class AreaCheckServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         long startTime = System.nanoTime();
-
         String xStr = req.getParameter("x");
         BigDecimal xBigDecimal = new BigDecimal(xStr);
         xBigDecimal = xBigDecimal.setScale(2, RoundingMode.HALF_UP);
         double x = xBigDecimal.doubleValue();
-
         String yStr = req.getParameter("y");
         BigDecimal yBigDecimal = new BigDecimal(yStr);
         yBigDecimal = yBigDecimal.setScale(2, RoundingMode.HALF_UP);
         double y = yBigDecimal.doubleValue();
-
         String rStr = req.getParameter("r");
         BigDecimal rBigDecimal = new BigDecimal(rStr);
         rBigDecimal = rBigDecimal.setScale(2, RoundingMode.HALF_UP);
         double r = rBigDecimal.doubleValue();
-
         var point = new Point(x, y, r);
         long endTime = System.nanoTime();
         LocalDateTime now = LocalDateTime.now();
@@ -53,5 +52,6 @@ public class AreaCheckServlet extends HttpServlet {
         try (PrintWriter writer = resp.getWriter()) {
             writer.write(htmlResponse.toString());
         }
+
     }
 }

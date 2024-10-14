@@ -98,6 +98,7 @@ function sendData() {
             .then(html => {
                 const resultsTable = document.getElementById('results');
                 resultsTable.innerHTML += html.trim();
+
             })
             .catch(error => console.error('Error:', error));
     }
