@@ -1,15 +1,22 @@
+package model;
+
 public class Point {
 
     private final double x;
     private final double y;
     private final double r;
     private final boolean status;
+    private final String localTime;
+    private final String executionTime;
 
-    public Point(double x, double y, double r) {
+
+    public Point(double x, double y, double r, String localTime, String executionTime) {
         this.x = x;
         this.y = y;
         this.r = r;
-        status = validate(x, y, r);
+        this.status = validate(x, y, r);
+        this.localTime = localTime;
+        this.executionTime = executionTime;
     }
 
     private boolean validate(double x, double y, double r) {
@@ -34,4 +41,11 @@ public class Point {
         return status;
     }
 
+    public String getLocalTime() {
+        return localTime;
+    }
+
+    public String getExecutionTime() {
+        return executionTime;
+    }
 }

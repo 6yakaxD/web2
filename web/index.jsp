@@ -1,3 +1,6 @@
+<%@ page import="model.Point" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: rmtj7
@@ -16,6 +19,7 @@
     <title>Лабораторная 2 по вебу</title>
 </head>
 <body>
+
 
 <div class="headder">
     <h1>Таджеддинов Рамиль Эмильевич</h1>
@@ -59,14 +63,11 @@
     <div class="input-wrapper">
 
         <form method="POST" class="data-form">
-
             <table>
-
                 <tr>
                     <td><p>Введите X:</p></td>
                     <td><label for="y"></label><input type="text" id="x" required></td>
                 </tr>
-
                 <tr>
                     <td><p>Введите Y:</p></td>
                     <td id="y">
@@ -81,7 +82,6 @@
                         <label><input type="radio" name="y" value="2">2</label>
                     </td>
                 </tr>
-
                 <tr>
                     <td><p>Введите R:</p></td>
                     <td id="r">
@@ -92,7 +92,6 @@
                         <label><input type="radio" name="r" value="3">3</label>
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="2">
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -100,15 +99,15 @@
                         </div>
                     </td>
                 </tr>
-
             </table>
-
         </form>
 
     </div>
 
 </div>
 
+
+<% ArrayList<Point> history = (ArrayList<Point>) session.getAttribute("history"); %>
 <div class="results-section">
     <table id="result-table">
         <thead>
@@ -122,7 +121,18 @@
         </tr>
         </thead>
         <tbody id="results">
-
+        <% if (history != null && !history.isEmpty()) {
+            for (Point p : history) {
+        %>
+        <tr>
+            <th><%= p.getX() %></th>
+            <th><%= p.getY() %></th>
+            <th><%= p.getR() %></th>
+            <th><%= p.getStatus() %></th>
+            <th><%= p.getLocalTime() %></th>
+            <th><%= p.getExecutionTime() %></th>
+        </tr>
+        <% } }%>
         </tbody>
     </table>
 </div>

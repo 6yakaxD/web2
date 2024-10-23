@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch('app', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `x=${position.x}&y=${position.y}&r=${R}`
+            body: `x=${position.x}&y=${position.y}&r=${R}&key=svg`
         })
             .then(response => response.text())
             .then(html => {
@@ -31,25 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function getMousePosition(svg, event) {
     let rect = svg.getBoundingClientRect();
-    
     // Центр координат - это середина SVG графика
     let centerX = rect.width / 2;
     let centerY = rect.height / 2;
-    
     // Получаем координаты клика относительно центра координат
     let x = (event.clientX - rect.left - centerX) * R / R_PIXELS;
     let y = (centerY - (event.clientY - rect.top)) * R / R_PIXELS;
-
     return { x, y };
 }
-
 function setPointer(x, y) {
     // координаты -> обратно в пиксели для отображения точки на графике
     let pixelX = x * R_PIXELS / R + svg.clientWidth / 2;
     let pixelY = svg.clientHeight / 2 - y * R_PIXELS / R;
-
     svg.insertAdjacentHTML("beforeend", `<circle r="4" cx="${pixelX}" cy="${pixelY}" fill-opacity="0.7" fill="white" ></circle>`);
 }
+
+
+
+
+
+
 
 
 
@@ -63,44 +64,38 @@ function validateForm() {
         alert("Поле X должно лежать в диапазоне от -3 до 3");
         return false;
     }
-
     const yChecked = document.querySelector('input[name="y"]:checked');
     if (!yChecked) {
         alert("Выберите значение Y");
         return false;
     }
-
     const rChecked = document.querySelector('input[name="r"]:checked');
     if (!rChecked) {
         alert("Выберите значение R");
         return false;
     }
-
     return true;
 }
 
-
 function sendData() {
     event.preventDefault();
-
     const x = document.getElementById('x').value;
     const y = document.querySelector('input[name="y"]:checked')?.value;
     const r = document.querySelector('input[name="r"]:checked')?.value;
-
     if (validateForm()) {
-
         fetch('app', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `x=${x}&y=${y}&r=${r}`
-        })
-            .then(response => response.text())
-            .then(html => {
-                const resultsTable = document.getElementById('results');
-                resultsTable.innerHTML += html.trim();
-
-            })
-            .catch(error => console.error('Error:', error));
+            body: `x=${x}&y=${y}&r=${r}&key=btn`
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = 'result.jsp';
+            } else {
+                alert("Ошибка при отправке данных");
+            }
+        });
     }
 }
+
+
 

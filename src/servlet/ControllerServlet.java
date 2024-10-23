@@ -1,12 +1,11 @@
-import jakarta.servlet.RequestDispatcher;
+package servlet;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 public class ControllerServlet extends HttpServlet {
 
@@ -17,12 +16,9 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("x") == null || req.getParameter("y") == null || req.getParameter("r") == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().println("Invalid request. Provide coordinates x, y, r.");
-        } else {
-            getServletContext().getNamedDispatcher("AreaChecker").forward(req, resp);
-        }
+        if (req.getParameter("x") == null || req.getParameter("y") == null || req.getParameter("r") == null || req.getParameter("key") == null)
+            req.getServletContext().getNamedDispatcher("Controller").forward(req, resp);
+        else getServletContext().getNamedDispatcher("AreaChecker").forward(req, resp);
     }
 
 }
