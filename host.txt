@@ -1,7 +1,5 @@
-download wildfly.zip
-add user: {%WILDFLY_HOME%}/bin/add-user.sh
-set .war: {%WILDFLY_HOME%}/standalone/deployments
-start: {%WILDFLY_HOME%}/bin/standalone.sh
-
-TODO
-	write script to helios deploy
+ssh -p 2222 -L 41978:localhost:41978 -L 41979:localhost:41979 s409659@se.ifmo.ru
+sh wildfly-33.0.2.Final/bin/standalone.sh
+ports:
+	41978 - http
+	41979 - managment-http
